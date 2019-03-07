@@ -50,7 +50,8 @@ module.exports = grammar({
 
     identifier: $ => $._identifier,
 
-    _identifier: $ => /[a-zA-Z_][a-zA-Z0-9]*/,
+    _identifier: $ => /[a-zA-Z_][\sa-zA-Z0-9]*/,
+
 
     string: $ => choice(
       $._quoted_identifier,
