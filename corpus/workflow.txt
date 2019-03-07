@@ -1,0 +1,31 @@
+================
+Workflow
+================
+
+version=1
+
+workflow "example" {
+  on = "push"
+  resolves = [
+    "custom",
+    "push image",
+    "parallel 1",
+    "parallel 2"
+  ]
+
+}
+
+---
+
+(workflow_file
+  (version (integer))
+  (workflow
+    (string)
+    (on_kvp (event_string))
+    (resolves_kvp
+      (string_or_array
+        (string_array
+          (string)
+          (string)
+          (string)
+          (string))))))
