@@ -14,7 +14,6 @@ module.exports = grammar({
       $.integer
     ),
 
-    integer: $ => /[0-9]+/
     workflow: $ => seq(
       'workflow',
       $.string,
