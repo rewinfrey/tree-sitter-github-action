@@ -18,7 +18,7 @@ module.exports = grammar({
       'workflow',
       $.string,
       '{',
-      repeat1($.on_kvp),
+      repeat1(choice($.on_kvp, $.resolves_kvp)),
       '}'
     ),
 
@@ -26,6 +26,24 @@ module.exports = grammar({
       'on',
       '=',
       $.event_string
+    ),
+
+    resolves_kvp: $ => seq(
+      'resolves',
+      '=',
+      $.string_or_array
+    ),
+
+    string_or_array: $ => choice(
+      $.string,
+      $.string_array
+    ),
+
+    string_array: $ => seq(
+      '[',
+      repeat(seq($.string, ',')),
+      optional(','),
+      ']'
     ),
 
     integer: $ => /[0-9]+/,
