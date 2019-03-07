@@ -19,7 +19,14 @@ module.exports = grammar({
       'workflow',
       $.string,
       '{',
+      repeat1($.on_kvp),
       '}'
+    ),
+
+    on_kvp: $ => seq(
+      'on',
+      '=',
+      $.event_string
     ),
 
     integer: $ => /[0-9]+/,
