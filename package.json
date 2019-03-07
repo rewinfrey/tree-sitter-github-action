@@ -1,0 +1,31 @@
+{
+  "name": "tree-sitter-github-action",
+  "version": "0.0.1",
+  "description": "GitHub Action grammar for tree-sitter",
+  "main": "index.js",
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp build",
+    "test": "tree-sitter test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rewinfrey/tree-sitter-github-action.git"
+  },
+  "keywords": [
+    "tree-sitter",
+    "parser",
+    "github-action"
+  ],
+  "author": "Rick Winfrey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rewinfrey/tree-sitter-github-action/issues"
+  },
+  "homepage": "https://github.com/rewinfrey/tree-sitter-github-action#readme",
+  "dependencies": {
+    "nan": "^2.12.1"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.14.5"
+  }
+}
