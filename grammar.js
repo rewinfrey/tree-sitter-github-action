@@ -41,8 +41,7 @@ module.exports = grammar({
 
     string_array: $ => seq(
       '[',
-      repeat(seq($.string, ',')),
-      optional(','),
+      repeat(seq($.string, optional(','))),
       ']'
     ),
 
@@ -81,4 +80,4 @@ module.exports = grammar({
       /["\\\u0000-\u001F\u007F]/
     ),
   }
-});
+})

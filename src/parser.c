@@ -6,7 +6,7 @@
 #endif
 
 #define LANGUAGE_VERSION 9
-#define STATE_COUNT 43
+#define STATE_COUNT 40
 #define SYMBOL_COUNT 32
 #define ALIAS_COUNT 0
 #define TOKEN_COUNT 17
@@ -753,8 +753,12 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
         ADVANCE(18);
       END_STATE();
     case 60:
+      if (lookahead == '"')
+        ADVANCE(2);
       if (lookahead == ',')
         ADVANCE(3);
+      if (lookahead == ']')
+        ADVANCE(8);
       if (lookahead == 'o')
         ADVANCE(61);
       if (lookahead == 'r')
@@ -915,9 +919,6 @@ static TSLexMode ts_lex_modes[STATE_COUNT] = {
   [37] = {.lex_state = 75},
   [38] = {.lex_state = 73},
   [39] = {.lex_state = 75},
-  [40] = {.lex_state = 75},
-  [41] = {.lex_state = 75},
-  [42] = {.lex_state = 73},
 };
 
 static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
@@ -977,10 +978,12 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [9] = {
     [anon_sym_RBRACE] = ACTIONS(21),
+    [anon_sym_RBRACK] = ACTIONS(21),
     [anon_sym_resolves] = ACTIONS(21),
     [anon_sym_LBRACE] = ACTIONS(21),
     [anon_sym_COMMA] = ACTIONS(21),
     [anon_sym_on] = ACTIONS(21),
+    [anon_sym_DQUOTE] = ACTIONS(21),
   },
   [10] = {
     [anon_sym_LBRACE] = ACTIONS(23),
@@ -1016,17 +1019,21 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [18] = {
     [anon_sym_RBRACE] = ACTIONS(41),
+    [anon_sym_RBRACK] = ACTIONS(41),
     [anon_sym_resolves] = ACTIONS(41),
     [anon_sym_LBRACE] = ACTIONS(41),
     [anon_sym_COMMA] = ACTIONS(41),
     [anon_sym_on] = ACTIONS(41),
+    [anon_sym_DQUOTE] = ACTIONS(41),
   },
   [19] = {
     [anon_sym_RBRACE] = ACTIONS(43),
+    [anon_sym_RBRACK] = ACTIONS(43),
     [anon_sym_resolves] = ACTIONS(43),
     [anon_sym_LBRACE] = ACTIONS(43),
     [anon_sym_COMMA] = ACTIONS(43),
     [anon_sym_on] = ACTIONS(43),
+    [anon_sym_DQUOTE] = ACTIONS(43),
   },
   [20] = {
     [sym__escape] = STATE(20),
@@ -1088,42 +1095,43 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [31] = {
     [sym__string] = STATE(9),
-    [sym_string] = STATE(36),
+    [sym_string] = STATE(35),
     [sym__quoted_identifier] = STATE(9),
-    [aux_sym_string_array_repeat1] = STATE(37),
+    [aux_sym_string_array_repeat1] = STATE(36),
     [anon_sym_DQUOTE] = ACTIONS(9),
     [anon_sym_RBRACK] = ACTIONS(74),
-    [anon_sym_COMMA] = ACTIONS(76),
   },
   [32] = {
+    [anon_sym_RBRACE] = ACTIONS(76),
+    [anon_sym_on] = ACTIONS(76),
+    [anon_sym_resolves] = ACTIONS(76),
+  },
+  [33] = {
     [anon_sym_RBRACE] = ACTIONS(78),
     [anon_sym_on] = ACTIONS(78),
     [anon_sym_resolves] = ACTIONS(78),
   },
-  [33] = {
+  [34] = {
     [anon_sym_RBRACE] = ACTIONS(80),
     [anon_sym_on] = ACTIONS(80),
     [anon_sym_resolves] = ACTIONS(80),
   },
-  [34] = {
-    [anon_sym_RBRACE] = ACTIONS(82),
-    [anon_sym_on] = ACTIONS(82),
-    [anon_sym_resolves] = ACTIONS(82),
-  },
   [35] = {
-    [anon_sym_RBRACK] = ACTIONS(84),
+    [anon_sym_DQUOTE] = ACTIONS(82),
+    [anon_sym_RBRACK] = ACTIONS(82),
+    [anon_sym_COMMA] = ACTIONS(84),
   },
   [36] = {
-    [anon_sym_COMMA] = ACTIONS(86),
+    [sym__string] = STATE(9),
+    [sym_string] = STATE(35),
+    [sym__quoted_identifier] = STATE(9),
+    [aux_sym_string_array_repeat1] = STATE(39),
+    [anon_sym_DQUOTE] = ACTIONS(9),
+    [anon_sym_RBRACK] = ACTIONS(86),
   },
   [37] = {
-    [sym__string] = STATE(9),
-    [sym_string] = STATE(36),
-    [sym__quoted_identifier] = STATE(9),
-    [aux_sym_string_array_repeat1] = STATE(41),
-    [anon_sym_DQUOTE] = ACTIONS(9),
-    [anon_sym_RBRACK] = ACTIONS(84),
-    [anon_sym_COMMA] = ACTIONS(88),
+    [anon_sym_DQUOTE] = ACTIONS(88),
+    [anon_sym_RBRACK] = ACTIONS(88),
   },
   [38] = {
     [anon_sym_RBRACE] = ACTIONS(90),
@@ -1131,26 +1139,12 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
     [anon_sym_resolves] = ACTIONS(90),
   },
   [39] = {
-    [anon_sym_COMMA] = ACTIONS(92),
-    [anon_sym_RBRACK] = ACTIONS(92),
-    [anon_sym_DQUOTE] = ACTIONS(92),
-  },
-  [40] = {
-    [anon_sym_RBRACK] = ACTIONS(94),
-  },
-  [41] = {
     [sym__string] = STATE(9),
-    [sym_string] = STATE(36),
+    [sym_string] = STATE(35),
     [sym__quoted_identifier] = STATE(9),
-    [aux_sym_string_array_repeat1] = STATE(41),
-    [anon_sym_COMMA] = ACTIONS(92),
-    [anon_sym_RBRACK] = ACTIONS(92),
-    [anon_sym_DQUOTE] = ACTIONS(96),
-  },
-  [42] = {
-    [anon_sym_RBRACE] = ACTIONS(99),
-    [anon_sym_on] = ACTIONS(99),
-    [anon_sym_resolves] = ACTIONS(99),
+    [aux_sym_string_array_repeat1] = STATE(39),
+    [anon_sym_DQUOTE] = ACTIONS(92),
+    [anon_sym_RBRACK] = ACTIONS(88),
   },
 };
 
@@ -1192,18 +1186,15 @@ static TSParseActionEntry ts_parse_actions[] = {
   [70] = {.count = 1, .reusable = true}, REDUCE(sym_event_string, 1),
   [72] = {.count = 1, .reusable = true}, REDUCE(sym_on_kvp, 3),
   [74] = {.count = 1, .reusable = true}, SHIFT(34),
-  [76] = {.count = 1, .reusable = true}, SHIFT(35),
-  [78] = {.count = 1, .reusable = true}, REDUCE(sym_string_or_array, 1),
-  [80] = {.count = 1, .reusable = true}, REDUCE(sym_resolves_kvp, 3),
-  [82] = {.count = 1, .reusable = true}, REDUCE(sym_string_array, 2),
-  [84] = {.count = 1, .reusable = true}, SHIFT(38),
-  [86] = {.count = 1, .reusable = true}, SHIFT(39),
-  [88] = {.count = 1, .reusable = true}, SHIFT(40),
+  [76] = {.count = 1, .reusable = true}, REDUCE(sym_string_or_array, 1),
+  [78] = {.count = 1, .reusable = true}, REDUCE(sym_resolves_kvp, 3),
+  [80] = {.count = 1, .reusable = true}, REDUCE(sym_string_array, 2),
+  [82] = {.count = 1, .reusable = true}, REDUCE(aux_sym_string_array_repeat1, 1),
+  [84] = {.count = 1, .reusable = true}, SHIFT(37),
+  [86] = {.count = 1, .reusable = true}, SHIFT(38),
+  [88] = {.count = 1, .reusable = true}, REDUCE(aux_sym_string_array_repeat1, 2),
   [90] = {.count = 1, .reusable = true}, REDUCE(sym_string_array, 3),
-  [92] = {.count = 1, .reusable = true}, REDUCE(aux_sym_string_array_repeat1, 2),
-  [94] = {.count = 1, .reusable = true}, SHIFT(42),
-  [96] = {.count = 2, .reusable = true}, REDUCE(aux_sym_string_array_repeat1, 2), SHIFT_REPEAT(8),
-  [99] = {.count = 1, .reusable = true}, REDUCE(sym_string_array, 4),
+  [92] = {.count = 2, .reusable = true}, REDUCE(aux_sym_string_array_repeat1, 2), SHIFT_REPEAT(8),
 };
 
 #ifdef _WIN32
