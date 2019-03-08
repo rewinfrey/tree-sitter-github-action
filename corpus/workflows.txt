@@ -1,0 +1,96 @@
+================================
+Empty Workflow
+================================
+
+workflow "test" { }
+
+---
+
+(workflow_file
+  (workflow
+    (string)))
+
+================================
+Workflow with Version
+================================
+
+version=1
+
+workflow "test" { }
+
+---
+
+(workflow_file
+  (version (integer))
+  (workflow
+    (string)))
+
+================================
+Workflow with On
+================================
+
+
+workflow "push" {
+  on = "push"
+}
+
+---
+
+(workflow_file
+  (workflow
+    (string)
+    (on_kvp (event_string))))
+
+================================
+Workflow with Resolves
+================================
+
+
+workflow "push" {
+  resolves = [
+    "custom",
+    "push image",
+    "parallel 1",
+    "parallel 2"
+  ]
+}
+
+---
+
+(workflow_file
+  (workflow
+    (string)
+    (resolves_kvp
+      (string_array
+        (string)
+        (string)
+        (string)
+        (string)))))
+
+
+================================
+Workflow with On and Resolves
+================================
+
+workflow "push" {
+  on = "push"
+  resolves = [
+    "custom",
+    "push image",
+    "parallel 1",
+    "parallel 2"
+  ]
+}
+
+---
+
+(workflow_file
+  (workflow
+    (string)
+    (on_kvp (event_string))
+    (resolves_kvp
+      (string_array
+        (string)
+        (string)
+        (string)
+        (string)))))

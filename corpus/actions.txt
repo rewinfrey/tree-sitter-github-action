@@ -1,0 +1,144 @@
+================================
+Empty Action
+================================
+
+action "test" { }
+
+---
+
+(workflow_file
+  (action (string)))
+
+================================
+Action with Remote Uses
+================================
+
+action "custom" {
+  uses = "actions/git-and-stuff@master"
+}
+
+---
+
+(workflow_file
+  (action
+    (string)
+    (uses_kvp
+      (remote_uses
+        (github_owner)
+        (github_repo)))))
+
+================================
+Action with Docker Uses
+================================
+
+action "test" {
+  uses = "docker://alpine"
+}
+
+---
+
+(workflow_file
+  (action
+    (string)
+    (uses_kvp
+      (docker_uses
+        (docker_path_component)))))
+
+================================
+Action with Local Uses
+================================
+
+action "test" {
+  uses = "./example"
+}
+
+---
+
+(workflow_file
+  (action
+    (string)
+    (uses_kvp
+      (local_uses))))
+
+================================
+Action with Needs
+================================
+
+action "test" {
+  needs = [ "pull" ]
+}
+
+---
+
+(workflow_file
+  (action
+    (string)
+    (needs_kvp
+      (string_array (string)))))
+
+================================
+Action with Runs
+================================
+
+action "test" {
+  runs = "sh"
+}
+
+---
+
+(workflow_file
+  (action
+    (string)
+    (runs_kvp (string))))
+
+================================
+Action with Args
+================================
+
+action "test" {
+  args = [ "-c", "sleep 3" ]
+}
+
+---
+
+(workflow_file
+  (action
+    (string)
+    (args_kvp
+      (string_array (string) (string)))))
+
+================================
+Action with Env
+================================
+
+action "test" {
+  env = {
+    TEST = "test"
+    TEST2 = "test2"
+  }
+}
+
+---
+
+(workflow_file
+  (action
+    (string)
+    (env_kvp
+      (env_var (identifier) (string))
+      (env_var (identifier) (string)))))
+
+================================
+Action with Secrets
+================================
+
+action "test" {
+  secrets = ["awskey"]
+}
+
+---
+
+(workflow_file
+  (action
+    (string)
+    (secrets_kvp
+      (identity_array (quoted_identifier)))))
